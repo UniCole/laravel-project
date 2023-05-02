@@ -2,7 +2,7 @@
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Product List</h2>
-            <a :href="route('categories.create')" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</a>
+            <a :href="route('products.create')" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</a>
         </template>
 
         <div class="py-12">
