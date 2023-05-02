@@ -14,6 +14,9 @@
                                 <tr>
                                     <th class="px-4 py-2">#</th>
                                     <th class="px-4 py-2">Name</th>
+                                    <th class="px-4 py-2">Quantity</th>
+                                    <th class="px-4 py-2">price</th>
+                                    <th class="px-4 py-2">Image</th>
                                     <th class="px-4 py-2">Actions</th>
                                 </tr>
                             </thead>
@@ -21,6 +24,9 @@
                                 <tr v-for="(product, index) in products" :key="product.id">
                                     <td class="border px-4 py-2">{{ index + 1 }}</td>
                                     <td class="border px-4 py-2">{{ product.name }}</td>
+                                    <td class="border px-4 py-2">{{ product.quantity }}</td>
+                                    <td class="border px-4 py-2">{{ product.price }}</td>
+                                    <td class="border px-4 py-2">{{ product.image }}</td>
                                     <td class="border px-4 py-2">
                                         <a :href="`/products/${product.id}/edit`" class="text-blue-600 hover:text-blue-800 mr-2">Edit</a>
                                         <button @click="deleteCategory(product.id)" class="text-red-600 hover:text-red-800">Delete</button>
