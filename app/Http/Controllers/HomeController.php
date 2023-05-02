@@ -38,8 +38,6 @@ class HomeController extends Controller
         dd('products');
     }
 
-
-    
     public function dashboard(){
         return Inertia::render('Dashboard');
     }

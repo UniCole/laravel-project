@@ -81,6 +81,7 @@ class ProductController extends Controller
             'image' => 'required|url|',
             'price' => 'required|decimal|min:1|max:9999',
             'quantity' => 'required|numeric|min:0|max:9999',
+            
         ]);
 
 
