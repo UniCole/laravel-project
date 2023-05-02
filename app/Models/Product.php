@@ -14,9 +14,9 @@ class Product extends Model
 
     protected $fillable = ['name', 'user_id', 'image', 'price', 'quantity', 'category_id'];
 
-    public function user()
+    public function store()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Store::class);
     }
 
     public function category()
