@@ -13,12 +13,59 @@
                                 <label class="block text-gray-700 font-bold mb-2" for="name">
                                     Name
                                 </label>
-                                <input v-model="form.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Product Name">
-                                <p v-if="form?.errors?.name" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}</p>
+                                <input v-model="form.name"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="name" name="name" type="text" placeholder="Product Name">
+                                <p v-if="form?.errors?.name" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                </p>
                             </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                    Quantity
+                                </label>
+                                <input v-model="form.quantity"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="name" name="name" type="text" placeholder="Product Name">
+                                <p v-if="form?.errors?.quantity" class="text-red-500 text-xs italic">{{ form.errors.name[0]
+                                }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                    Price
+                                </label>
+                                <input v-model="form.price"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="name" name="name" type="text" placeholder="Product Name">
+                                <p v-if="form?.errors?.price" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                </p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                    Image URL
+                                </label>
+                                <input v-model="form.image"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="name" name="name" type="text" placeholder="Product Name">
+                                <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                </p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                    Category
+                                </label>
+                                <select v-model="selectedCategory"
+                                    class="block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                                </select>
+                                <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                </p>
+                            </div>
+
                             <div class="flex items-center justify-between">
-                                <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</button>
-                                <a :href="route('products.index')" class="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-400">Cancel</a>
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</button>
+                                <a :href="route('products.index')"
+                                    class="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-400">Cancel</a>
                             </div>
                         </form>
                     </div>
@@ -30,18 +77,19 @@
 
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
 export default {
     components: {
         AuthenticatedLayout,
     },
     setup() {
-    
+        const categories = usePage().props.categories;
+
         const form = useForm({
             name: '',
             image: '',
-            price:'',
+            price: '',
             quantity: ''
         });
 
@@ -52,6 +100,7 @@ export default {
         return {
             form: form,
             submitForm,
+            categories
         };
     },
     head() {
@@ -59,5 +108,10 @@ export default {
             title: 'Create Product',
         };
     },
+    methods: {
+        selectCategory() {
+            router.get('?category=' + this.selectedCategory)
+        }
+    }
 };
 </script>

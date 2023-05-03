@@ -13,9 +13,9 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    public function store()
+    public function user()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(User::class);
     }
 
     public function products()

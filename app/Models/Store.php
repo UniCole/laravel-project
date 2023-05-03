@@ -7,13 +7,7 @@ use App\Models\User;
 
 class Store extends User
 {
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+    protected $table = 'users';
     
-    public function categories()
-    {
-        return $this->hasMany(Category::class);
-    }
+
 }

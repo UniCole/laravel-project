@@ -15,13 +15,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->onDelete('cascade');
-            $table->foreignIdFor(Category::class)->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->integer('quantity');
             $table->string('image');
-            $table->decimal('price', 10,2);
+            $table->decimal('price', 10, 2);
             $table->timestamps();
+
+                   
+            $table->foreign('user_id')
+            ->references('id')->on('users')->onDelete('cascade');
+
+            $table->foreign('category_id')
+                ->references('id')->on('categories')->onDelete('cascade');
+         
         });
     }
 

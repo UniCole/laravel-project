@@ -13,21 +13,21 @@ class CreateOrderProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_product', function (Blueprint $table) {
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+        // Schema::create('order_product', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('order_id');
+        //     $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        //     $table->unsignedBigInteger('product_id');
+        //     $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
-            $table->integer('quantity');
-            $table->decimal('price', 8, 2);
-            $table->timestamps();
-        });
+        //     $table->integer('quantity');
+        //     $table->decimal('price', 8, 2);
+        //     $table->timestamps();
+        // });
 
-        Schema::table('order_product', function (Blueprint $table) {
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-        });
+        // Schema::table('order_product', function (Blueprint $table) {
+        //     $table->foreignId('order_id')->constrained()->onDelete('cascade');
+        // });
     }
 
     /**

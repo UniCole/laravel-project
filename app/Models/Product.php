@@ -14,9 +14,9 @@ class Product extends Model
 
     protected $fillable = ['name', 'user_id', 'image', 'price', 'quantity', 'category_id'];
 
-    public function store()
+    public function user()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(User::class);
     }
 
     public function category()
@@ -25,7 +25,7 @@ class Product extends Model
     }
 
     public function orders()
-{
-    return $this->belongsToMany(Order::class)->withPivot('quantity', 'price');
-}
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity', 'price');
+    }
 }

@@ -27,7 +27,6 @@ class ProductController extends Controller
     {
         $categories = Category::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')
             ->get();
-        // return Inertia::render('Product/Create');
         return Inertia::render('Product/Create', [
             'categories' => $categories,
         ]);
