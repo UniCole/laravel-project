@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import ManageUsers from '@/Components/ManageUsers.vue';
 </script>
 
 <template>
@@ -18,5 +19,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                 </div>
             </div>
         </div>
+
+        <ManageUsers v-if="$page.props.auth.user.role === 'admin'" />
+        
+
     </AuthenticatedLayout>
 </template>

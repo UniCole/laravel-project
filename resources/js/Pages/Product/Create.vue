@@ -53,7 +53,8 @@
                                 <label class="block text-gray-700 font-bold mb-2" for="name">
                                     Category
                                 </label>
-                                <select v-model="selectedCategory"
+
+                                <select @change="selectCategory" v-model="selectedCategory"
                                     class="block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                                 </select>

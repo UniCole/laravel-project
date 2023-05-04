@@ -72,6 +72,6 @@ class CategoryController extends Controller
     {
         Category::where('user_id', Auth::user()->id)->whereId($id)->delete();
 
-        return to_route('categories.index');
+        return to_route('dashboard');
     }
 }

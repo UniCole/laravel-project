@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 
@@ -21,11 +22,41 @@ class StoreController extends Controller
         })
         ->paginate();
         $categories = $shop->categories;
+        $selectedCategory = $request->category ?? 0;
 
         return Inertia::render('Store/Index', [
             'categories' => $categories,
             'products' => $products,
-            'selected_category' => $request->category ?? 0,
+            'selected_category' => $selectedCategory,
+            'title' => $selectedCategory > 0 ? 
+            "shopping by category - " . $products->first()->category->name : 'Welcome to our store',
+            'store_name' => $shop->name,
         ]);
     }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return to_route('categories.index');
+    }
+
+    public function impersonateUser($id)
+    {
+        session(['impersonator' => Auth::id()]);
+        Auth::loginUsingId($id);
+        return to_route('dashboard');
+    }
+
+    public function stopImpersonatingUser()
+    {
+        $originalUserId = session('impersonator');
+        Auth::loginUsingId($originalUserId);
+        session()->forget('impersonator');
+        
+        return redirect()->route('dashboard');
+    }
+
+
+
 }

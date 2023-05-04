@@ -1,5 +1,5 @@
 <template>
-    <nav id="header" class="w-full z-30 top-0 py-1">
+    <nav  @mouseleave="isDropdownOpen = false" id="header" class="w-full z-30 top-0 py-1">
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3">
 
             <label for="menu-toggle" class="cursor-pointer md:hidden block">
@@ -12,26 +12,25 @@
             <input class="hidden" type="checkbox" id="menu-toggle" />
 
             <div class="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
-                <nav>
+                <nav >
                     <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
                         <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
                                 href="#">Shop</a></li>
-                        <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-                                href="#">About</a></li>
-                        <li>
-                            <select
-                                @change="selectCategory"
-                                v-model="selectedCategory"
-                                class="block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                >
-                                <option value="0">All Categories</option>
-                                <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
-                            </select>
-                            <div
-                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M10 12l-5-5 1.41-1.41L10 9.18l3.59-3.59L15 7l-5 5z" />
-                                </svg>
+                        <li class="relative" >
+                            <div @mouseover="isDropdownOpen = true" >
+                                <button class="inline-block no-underline hover:text-black hover:underline py-2 px-4">
+                                    Categories
+                                </button>
+                            </div>
+                            <div v-if="isDropdownOpen" class="absolute z-50 bg-white py-2 mt-1 w-full shadow-lg"
+                                @mouseover="isDropdownOpen = true" @mouseleave="isDropdownOpen = false">
+                                <ul>
+                                    <li v-for="category in categories" :key="category.id">
+                                        <a @click="selectCategory(category.id)"
+                                            class="block cursor-pointer px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">{{
+                                                category.name }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
                     </ul>
@@ -47,13 +46,13 @@
                         <path
                             d="M5,22h14c1.103,0,2-0.897,2-2V9c0-0.553-0.447-1-1-1h-3V7c0-2.757-2.243-5-5-5S7,4.243,7,7v1H4C3.447,8,3,8.447,3,9v11 C3,21.103,3.897,22,5,22z M9,7c0-1.654,1.346-3,3-3s3,1.346,3,3v1H9V7z M5,10h2v2h2v-2h6v2h2v-2h2l0.002,10H5V10z" />
                     </svg>
-                    NORDICS
+                    {{ storeName }}
                 </a>
             </div>
 
             <div class="order-2 md:order-3 flex items-center" id="nav-content">
 
-                <a class="inline-block no-underline hover:text-black" href="#">
+                <a class="inline-block no-underline hover:text-black" href="/dashboard">
                     <svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24">
                         <circle fill="none" cx="12" cy="7" r="3" />
@@ -79,27 +78,29 @@
 
 <script>
 
-import { usePage, router  } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 
 export default {
-
     setup() {
         const categories = usePage().props.categories;
+        const storeName = usePage().props.store_name;
         return {
             categories,
+            storeName
         };
     },
     data() {
         return {
             selectedCategory: usePage().props.selected_category ?? 0,
+            isDropdownOpen: false,
         }
     },
     methods: {
-        selectCategory() {
-            router.get('?category=' + this.selectedCategory)
+        selectCategory(id) {
+            router.get('?category=' + id)
         }
     }
-    
+
 };
 
 </script>
