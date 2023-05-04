@@ -39,7 +39,7 @@ class CategoryController extends Controller
         ]);
 
         Auth::user()->categories()->create(['name' => $request->name]);
-        return to_route('categories.index');
+        return to_route('categories.index')->with('message', 'Category has been created');;
     }
 
     public function edit($id)
@@ -65,13 +65,13 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->update(['name' => $request->name]);
 
-        return to_route('categories.index');
+        return to_route('categories.index')->with('message', 'Category has been updated');;
     }
 
     public function destroy($id)
     {
         Category::where('user_id', Auth::user()->id)->whereId($id)->delete();
 
-        return to_route('dashboard');
+        return to_route('dashboard')->with('message', 'Category has been deleted');;
     }
 }

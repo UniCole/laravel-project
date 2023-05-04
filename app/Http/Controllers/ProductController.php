@@ -12,13 +12,19 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')
+        $products = Product::where('user_id', Auth::user()->id)
+        ->when($request->has('category'), function($query) use($request) {
+            return $query->where('category_id', $request->get('category'));
+        })->orderBy('created_at', 'desc')
             ->get();
-
+        $categories = Category::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')
+            ->get();
         return Inertia::render('Product/Index', [
             'products' => $products,
+            'categories' => $categories,
+            'selected_category' => $request->category ?? 0,
         ]);
     }
 
@@ -42,29 +48,29 @@ class ProductController extends Controller
                 'unique:products,name,' . $user->id . ',id,user_id,' . $user->id
             ],
             'image' => 'required|url|',
-            'price' => 'required|decimal|min:1|max:9999',
+            'price' => 'required|decimal:0,2|min:1|max:9999',
             'quantity' => 'required|numeric|min:0|max:9999',
-            'category_id' => 'required|exists:categories,id,user_id,' . $user->id
+            'category' => 'required|exists:categories,id,user_id,' . $user->id
         ]);
-    
+
         Product::create([
             'name' => $request->name,
             'user_id' => $user->id,
-            'category_id' => $request->category_id,
+            'category_id' => $request->category,
             'image' => $request->image,
             'price' => $request->price,
             'quantity' => $request->quantity,
         ]);
-    
-        return to_route('Products.index');
+        return to_route('products.index')->with('message', 'Product has been updated');
+
     }
 
     public function edit($id)
     {
-        $Product = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
 
         return Inertia::render('Product/Edit', [
-            'Product' => $Product,
+            'product' => $product,
         ]);
     }
 
@@ -78,9 +84,9 @@ class ProductController extends Controller
                 'unique:products,name,' . $id
             ],
             'image' => 'required|url|',
-            'price' => 'required|decimal|min:1|max:9999',
+            'price' => 'required|decimal:2|min:1|max:9999',
             'quantity' => 'required|numeric|min:0|max:9999',
-            
+
         ]);
 
 
@@ -92,12 +98,12 @@ class ProductController extends Controller
             'quantity' => $request->quantity
         ]);
 
-        return to_route('Products.index');
+        return to_route('products.index')->with('message', 'Product has been updated');
     }
 
     public function destroy($id)
     {
         Product::where('user_id', Auth::user()->id)->whereId($id)->delete();
-        return to_route('Products.index');
+        return to_route('products.index')->with('message', 'Product has been removed');
     }
 }

@@ -16,6 +16,9 @@ class StoreController extends Controller
     public function index($id, Request $request)
     {
         $shop = User::where('role', 'client')->where('id', $id)->first();
+        if(!$shop){
+            abort(404);
+        }
         $products = Product::where('user_id', $id)
         ->when($request->has('category') && $request->category > 0, function($query) use($request){
             return $query->where('category_id', $request->category);
@@ -38,7 +41,8 @@ class StoreController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return to_route('dashboard');
+
+        return to_route('dashboard')->with('message', 'User has been deleted');
     }
 
     public function impersonateUser($id)

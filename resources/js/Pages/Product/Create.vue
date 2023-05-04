@@ -16,7 +16,7 @@
                                 <input v-model="form.name"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="name" name="name" type="text" placeholder="Product Name">
-                                <p v-if="form?.errors?.name" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                <p v-if="form?.errors?.name" class="text-red-500 text-xs italic">{{ form.errors.name }}
                                 </p>
                             </div>
                             <div class="mb-4">
@@ -26,7 +26,7 @@
                                 <input v-model="form.quantity"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="name" name="name" type="text" placeholder="Product Name">
-                                <p v-if="form?.errors?.quantity" class="text-red-500 text-xs italic">{{ form.errors.name[0]
+                                <p v-if="form?.errors?.quantity" class="text-red-500 text-xs italic">{{ form.errors.quantity
                                 }}</p>
                             </div>
                             <div class="mb-4">
@@ -36,7 +36,7 @@
                                 <input v-model="form.price"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="name" name="name" type="text" placeholder="Product Name">
-                                <p v-if="form?.errors?.price" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                <p v-if="form?.errors?.price" class="text-red-500 text-xs italic">{{ form.errors.price }}
                                 </p>
                             </div>
                             <div class="mb-4">
@@ -46,7 +46,7 @@
                                 <input v-model="form.image"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="name" name="name" type="text" placeholder="Product Name">
-                                <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.image }}
                                 </p>
                             </div>
                             <div class="mb-4">
@@ -54,11 +54,12 @@
                                     Category
                                 </label>
 
-                                <select @change="selectCategory" v-model="selectedCategory"
+                                <select v-model="selectedCategory"
                                     class="block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                                 </select>
-                                <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                                <p v-if="form?.errors?.category" class="text-red-500 text-xs italic">{{
+                                    form.errors.category }}
                                 </p>
                             </div>
 
@@ -84,23 +85,26 @@ export default {
     components: {
         AuthenticatedLayout,
     },
+    data() {
+        return {
+            selectedCategory: 0,
+        }
+    },
     setup() {
         const categories = usePage().props.categories;
 
         const form = useForm({
             name: '',
-            image: '',
+            image: 'https://www.harfieldtableware.co.uk/wp-content/uploads/2019/09/001MBL-8oz-Cup-Med-Blue-scaled.jpg',
             price: '',
-            quantity: ''
+            quantity: '',
+            category: '',
         });
 
-        const submitForm = () => {
-            form.post(route('products.store'));
-        };
+
 
         return {
             form: form,
-            submitForm,
             categories
         };
     },
@@ -110,9 +114,10 @@ export default {
         };
     },
     methods: {
-        selectCategory() {
-            router.get('?category=' + this.selectedCategory)
-        }
+        submitForm() {
+            this.form.category = this.selectedCategory;
+            this.form.post(route('products.store'));
+        },
     }
 };
 </script>

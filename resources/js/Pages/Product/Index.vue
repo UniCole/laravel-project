@@ -2,8 +2,8 @@
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Product List</h2>
-            <a :href="route('products.create')"
-                class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</a>
+            <Link as="button" type="button" :href="route('products.create')"
+                class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</Link>
         </template>
 
         <div class="py-12">
@@ -18,7 +18,7 @@
                         class="block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                     </select>
-                    <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}
+                    <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.name }}
                     </p>
                 </div>
 
@@ -60,17 +60,16 @@
 
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage, router, Link} from '@inertiajs/vue3';
 
 export default {
     components: {
         AuthenticatedLayout,
+        Link,
     },
     setup() {
 
         const categories = usePage().props.categories;
-
-        // const { categories } = usePage().props.value;
         const products = usePage().props.products;
         const form = useForm({});
         const deleteCategory = (categoryId) => {
@@ -90,6 +89,11 @@ export default {
         return {
             title: 'Product List',
         };
+    },
+    data(){
+        return{
+            selectedCategory: 0,
+        }
     },
     methods: {
         selectCategory() {

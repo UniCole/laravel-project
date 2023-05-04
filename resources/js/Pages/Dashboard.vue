@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import ManageUsers from '@/Components/ManageUsers.vue';
+import Alert from '@/Components/Alert.vue';
 </script>
 
 <template>

@@ -14,7 +14,7 @@
                                     Name
                                 </label>
                                 <input v-model="form.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Category Name">
-                                <p v-if="form?.errors?.name" class="text-red-500 text-xs italic">{{ form.errors.name[0] }}</p>
+                                <p v-if="form?.errors?.name" class="text-red-500 text-xs italic">{{ form.errors.name }}</p>
                             </div>
                             <div class="flex items-center justify-between">
                                 <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500">Create</button>

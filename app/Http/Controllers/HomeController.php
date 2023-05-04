@@ -18,27 +18,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function loadStore($id){
-        $user = User::findOrFail($id);
-
-        $categories = $user->categories;
-        $products = $user->products;
-
-        return $user;
-    }
-
-    // public function client(){
-    //     dd('client');
-    // }
-
-    // public function admin(){
-    //     dd('admin');
-    // }
-    
-    public function products(){
-        dd('products');
-    }
-
     public function dashboard(){
         $data = [];
         if(Auth::user()->role === 'admin'){
