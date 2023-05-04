@@ -3,9 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
@@ -23,24 +21,21 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/', [HomeController::class, 'index']);
-// Route::get('/{id}', [HomeController::class, 'loadStore']);
 
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/admin', [HomeController::class, 'admin'])->middleware(['auth', 'can:isAdmin'])->name('admin');
-Route::get('/client', [HomeController::class, 'client'])->middleware(['auth', 'can:isClient'])->name('admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/stop-impersonate', [StoreController::class, 'stopImpersonatingUser'])->name('impersonate.logout');
-
 });
 
 Route::middleware(['auth', 'can:isAdmin'])->group(function () {
     Route::get('/impersonate/{id}', [StoreController::class, 'impersonateUser'])->name('impersonate.login');
-    Route::delete('/stores/{id}', [StoreController::class, 'destroy'])->name('store.destroy');
+    Route::delete('/stores/{id}', [StoreController::class, 'destroy'])
+    ->name('store.destroy');
 
 });
 

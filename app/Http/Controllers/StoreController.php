@@ -38,7 +38,7 @@ class StoreController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return to_route('categories.index');
+        return to_route('dashboard');
     }
 
     public function impersonateUser($id)
