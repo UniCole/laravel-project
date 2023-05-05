@@ -45,7 +45,7 @@
                                     <td class="border px-4 py-2">
                                         <a :href="`/products/${product.id}/edit`"
                                             class="text-blue-600 hover:text-blue-800 mr-2">Edit</a>
-                                        <button @click="deleteCategory(product.id)"
+                                        <button @click="deleteProduct(product.id)"
                                             class="text-red-600 hover:text-red-800">Delete</button>
                                     </td>
                                 </tr>
@@ -60,7 +60,7 @@
 
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useForm, usePage, router, Link} from '@inertiajs/vue3';
+import { useForm, usePage, router, Link } from '@inertiajs/vue3';
 
 export default {
     components: {
@@ -72,7 +72,7 @@ export default {
         const categories = usePage().props.categories;
         const products = usePage().props.products;
         const form = useForm({});
-        const deleteCategory = (categoryId) => {
+        const deleteProduct = (categoryId) => {
             if (confirm('Are you sure you want to delete?')) {
                 form.delete(route('products.destroy', categoryId))
                 window.location.reload();//because inertia is bit broken, fix it later, maybe its my PC?
@@ -81,7 +81,7 @@ export default {
 
         return {
             products,
-            deleteCategory,
+            deleteProduct,
             categories
         };
     },
@@ -90,8 +90,8 @@ export default {
             title: 'Product List',
         };
     },
-    data(){
-        return{
+    data() {
+        return {
             selectedCategory: 0,
         }
     },

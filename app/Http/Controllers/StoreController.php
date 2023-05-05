@@ -23,6 +23,7 @@ class StoreController extends Controller
         ->when($request->has('category') && $request->category > 0, function($query) use($request){
             return $query->where('category_id', $request->category);
         })
+        ->orderBy('id', 'DESC')
         ->paginate();
         $categories = $shop->categories;
         $selectedCategory = $request->category ?? 0;

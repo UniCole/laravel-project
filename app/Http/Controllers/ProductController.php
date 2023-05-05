@@ -61,7 +61,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
         ]);
-        return to_route('products.index')->with('message', 'Product has been updated');
+        return to_route('products.index')->with('message', 'Product has been added');
 
     }
 

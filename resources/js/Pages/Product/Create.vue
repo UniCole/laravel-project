@@ -20,32 +20,32 @@
                                 </p>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                <label class="block text-gray-700 font-bold mb-2" for="quantity">
                                     Quantity
                                 </label>
                                 <input v-model="form.quantity"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="name" name="name" type="text" placeholder="Product Name">
+                                    id="quantity" name="quantity" type="text" placeholder="Product quantity">
                                 <p v-if="form?.errors?.quantity" class="text-red-500 text-xs italic">{{ form.errors.quantity
                                 }}</p>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                <label class="block text-gray-700 font-bold mb-2" for="price">
                                     Price
                                 </label>
                                 <input v-model="form.price"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="name" name="name" type="text" placeholder="Product Name">
+                                    id="price" name="price" type="text" placeholder="Product Price">
                                 <p v-if="form?.errors?.price" class="text-red-500 text-xs italic">{{ form.errors.price }}
                                 </p>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 font-bold mb-2" for="name">
+                                <label class="block text-gray-700 font-bold mb-2" for="image">
                                     Image URL
                                 </label>
                                 <input v-model="form.image"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="name" name="name" type="text" placeholder="Product Name">
+                                    id="image" name="image" type="text" placeholder="Product image">
                                 <p v-if="form?.errors?.image" class="text-red-500 text-xs italic">{{ form.errors.image }}
                                 </p>
                             </div>
@@ -100,8 +100,6 @@ export default {
             quantity: '',
             category: '',
         });
-
-
 
         return {
             form: form,

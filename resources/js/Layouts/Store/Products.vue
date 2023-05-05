@@ -61,7 +61,7 @@ export default {
 
             // Store the updated cart in local storage
             localStorage.setItem('cart', JSON.stringify(existingCart))
-            window.location.reload();//TODO FIX IT, Use $emit instead
+            window.location.reload();//TODO: need to be fixed, should use $emit instead
         }
     },
 };
